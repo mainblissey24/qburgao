@@ -9,7 +9,19 @@ ProdutoModel.create = (produto, result) => {};
 //Seleciona produto por ID
 ProdutoModel.findById = (produtoId, result) => {};
 //Seleciona todos os produtos
-ProdutoModel.getAll = result => {};
+ProdutoModel.getAll = result => {
+    sql.query("SELECT * FROM produtos", (err, res)=>{
+        if(err){
+            console.log("erro: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log("produto: ", res);
+        result(null, res);
+
+    });
+};
 //Atualizar produto por id
 ProdutoModel.updateById = (produtoId, produto, result) => {};
 //Remover produto por id
