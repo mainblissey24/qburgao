@@ -5,18 +5,7 @@ const ProdutoModel = function(produto){
     this.valor= produto.valor;
 }
 //Cria novo produto no banco
-ProdutoModel.create = (produto, result) => {
-    sql.query("insert into produtos set ?", produto, (err, res)=>
-    if(err){
-        console.log("Erro:", err);
-        result(err, null);
-        return;
-    }
-    
-    console.log("Produto criado: ", {idprodutos: res.insertId, ...produto});
-    result(null, {idprodutos:res.insertId, ...produto});
-    )
-};
+ProdutoModel.create = (produto, result) => {};
 //Seleciona produto por ID
 ProdutoModel.findById = (produtoId, result) => {
     sql.query("Select * from produtos where idprodutos = "+produtoId, (err, res) => {
