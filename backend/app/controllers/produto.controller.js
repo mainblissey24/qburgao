@@ -78,7 +78,27 @@ exports.update = (req, res) => {
     });
 }
  }
-exports.delete = (req, res) => { }
-exports.deleteAll = (req, res) => { }
+exports.delete = (req, res) => { 
+    produtoModel.remove(req.params.produtoId, (err, data) =>{
+        if(err){
+            if(err.type == "not_found"){
+                res.status(404).send({message:"Produto não encontrado."})
+            }else{
+                res.status(500).send({message:"Erro ao deletar produto"})
+            }
+        }else{
+            res.send({message:"Produto deletado com sucesso"});
+        }
+    })
+}
+exports.deleteAll = (req, res) => {
+    produtoModel.removeAll((err, data) =>{
+        if(err){
+            res.status(500).send({message: "Erro ao deletar produto."})
+        }else{
+            res.send({message:"TODOS os produtos deletado com sucesso."})
+        }
+    })
+ }
 
 
