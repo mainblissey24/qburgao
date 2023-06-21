@@ -1,16 +1,16 @@
-const ProdutoModel = require("../models/produto.models");
+const PedidoModel = require("../models/pedido.models");
 
 exports.create = (req, res) => {
-    if (!req.body.nome || !req.body.valor){
+    if (!req.body.hora || !req.body.status){
         res.status(400).send({
             message: "Conteúdo do corpo da requisição vazia."
         });
     }else{
-        const produto = new ProdutoModel ({
-            nome: req.body.nome,
-            valor:req.body.valor
+        const pedido = new PedidoModel ({
+            hora: req.body.hora,
+            status:req.body.status
         });
-        ProdutoModel.create(produto, (err, data) =>{
+        PedidoModel.create(pedido, (err, data) =>{
             if (err){
                 res.status(500).send({
                     message: err.message || "Ocorreu ao inserir os dados"
@@ -22,7 +22,7 @@ exports.create = (req, res) => {
     }
 }
 exports.findAll = (req, res) => {
-    ProdutoModel.getAll((err, data) =>{
+    PedidoModel.getAll((err, data) =>{
         if(err){
             res.status(500).send({
                 message: err.message || "Ocorreu erro desconhecido!"
@@ -34,15 +34,15 @@ exports.findAll = (req, res) => {
 }
 
 exports.findById = (req, res) => {
-    ProdutoModel.findById(req.params.produtoId, (err, data)=> {
+    PedidoModel.findById(req.params.pedidoId, (err, data)=> {
         if(err){
             if(err.type == "not_found"){
                 res.status(404).send({
-                    message: "Produto não encrontrado com ID: "+req.params.produtoId
+                    message: "Pedido não encrontrado com ID: "+req.params.pedidoId
                 });
             }else{
                 res.status (500).send({
-                    message: "Erro ao retornar o produto com ID"+req.params.produtoId
+                    message: "Erro ao retornar o pedido com ID"+req.params.pedidoId
                 });
             }
         }else {
@@ -51,24 +51,24 @@ exports.findById = (req, res) => {
     })
 }
 exports.update = (req, res) => {
-    if(!req.body.nome || !req.body.valor){
+    if(!req.body.hora || !req.body.status){
         res.status(400).send({
             message: "Conteúdo do corpo da requisição vazia."
         });
     }else { 
-        const produto = new ProdutoModel({
-            nome: req.body.nome,
-            valor: req.body.valor
+        const pedido = new PedidoModel({
+            hora: req.body.hora,
+            status: req.body.status
         });
-    ProdutoModel.updateById(req.params.produtoId, produto, (err, data)=>{
+    PedidoModel.updateById(req.params.pedidoId, pedido, (err, data)=>{
         if(err){
             if (err.type == "not_found"){
                 res.status(404).send({
-                    message: "Produto não encontrado."
+                    message: "Pedido não encontrado."
                 })
             }else {
                 res.status(500).send({
-                    message: "Erro ao atualizar produto."
+                    message: "Erro ao atualizar pedido."
                 })
             }
         }else{
@@ -79,24 +79,24 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-        ProdutoModel.remove(req.params.produtoId, (err, data)=>{
+        PedidoModel.remove(req.params.pedidoId, (err, data)=>{
             if(err){
                 if (err.type == "not_found"){
-                    res.status(404).send({message: "Produto não encontrado."})
+                    res.status(404).send({message: "Pedido não encontrado."})
                 }else{
-                    res.status(500).send({message: "Erro ao deletar produto."})
+                    res.status(500).send({message: "Erro ao deletar pedido."})
                 }
             }else {
-                res.send({message: "Produto deletado com sucesso"});
+                res.send({message: "Pedido deletado com sucesso"});
             }
         })
 }
 exports.deleteAll = (req, res) => {
-    ProdutoModel.removeAll((err, data) =>{
+    PedidoModel.removeAll((err, data) =>{
         if(err){
-            res.status(500).send({message: "Erro ao deletar produto."})
+            res.status(500).send({message: "Erro ao deletar pedido."})
         }else{
-            res.send({message: "TODOS os produtos deletado com sucesso."});
+            res.send({message: "TODOS os pedido deletado com sucesso."});
         }
     })
 }

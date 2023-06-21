@@ -1,9 +1,7 @@
-//Modulo do MySQL
 const mysql = require("mysql");
 const dbConfig = require("../configs/db.config.js");
 
-//Cria uma conexao com o BD
-const connection = mysql.createConnection({
+const connection=mysql.createConnection({
     host: dbConfig.HOST,
     user: dbConfig.USER,
     password: dbConfig.PASSWORD,
@@ -11,9 +9,8 @@ const connection = mysql.createConnection({
     port: dbConfig.PORT
 });
 
-//Nova conexao com o MySQL
 connection.connect(error=>{
-    if (error) throw error;
+    if (error) throwerror;
     console.log("Banco de Dados Conectado!");
 });
 module.exports = connection;

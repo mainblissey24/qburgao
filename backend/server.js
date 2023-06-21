@@ -3,14 +3,18 @@ const app = express();
 
 app.use(express.urlencoded({extended:true}));
 
-app.get("/", (req, res) => {
+app.get("/", (req, res)=>{
     res.json({
-        message: "Bem vindo à API MVC do Senac"
-    })
-});
+        message: "Bem vindo à API MVC do SENAC"
+        })
+    });
+
 
 require("./app/routes/produto.routes.js")(app);
+require("./app/routes/pedido.routes.js")(app);
+require("./app/routes/produto_pedido.routes.js")(app);
 
-app.listen(3000, () => {
+
+app.listen(3000, ()=> {
     console.log("Servidor rodando na porta 3000");
-})
+});

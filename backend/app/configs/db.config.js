@@ -1,4 +1,5 @@
-//Arquivo de configurações do BD
+//Arquivo de configurações do DB
+
 module.exports = {
     HOST: "localhost",
     USER: "root",
