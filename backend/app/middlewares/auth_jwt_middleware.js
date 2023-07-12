@@ -35,7 +35,33 @@ isAdmin = (req, res, next)=>{
     });
 }
 
+isBalcao = (req, res, next)=>{
+    usuarioModel.findById(req.usuarioId, (err, data) =>{
+        if(data.tipo == 1 || data.tipo == 2){
+            next();
+        }else{
+            res.status(403).send({
+                message:"Você precisa ser do balcao de atendimento para executar a ação!"
+            })
+        }
+    });
+}
+
+isCozinha = (req, res, next)=>{
+    usuarioModel.findById(req.usuarioId, (err, data) =>{
+        if(data.tipo == 1 || data.tipo == 3){
+            next();
+        }else{
+            res.status(403).send({
+                message:"Você precisa ser da cozinha para executar a ação!"
+            })
+        }
+    });
+}
+
 module.exports = {
     verifyToken: verifyToken,
     isAdmin: isAdmin,
+    isBalcao: isBalcao,
+    isCozinha: isCozinha
 }
