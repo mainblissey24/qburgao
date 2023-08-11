@@ -1,102 +1,116 @@
-const ProdutoModel = require("../models/produto.models");
+const bcrypt = require("bcryptjs");
+const usuarioModel = require("../models/usuario.model.js");
+const config = require("../configs/auth.config.js");
+const jwt = require("jsonwebtoken");
 
-exports.create = (req, res) => {
-    if (!req.body.nome || !req.body.valor){
+exports.signUp = (req, res) => {
+    if (!req.body.email || !req.body.senha || !req.body.tipo){
         res.status(400).send({
-            message: "Conteúdo do corpo da requisição vazia."
-        });
-    }else{
-        const produto = new ProdutoModel ({
-            nome: req.body.nome,
-            valor:req.body.valor
-        });
-        ProdutoModel.create(produto, (err, data) =>{
-            if (err){
+            message: "E-mail, senha ou tipo não enviados."
+        })
+    } else {
+        const usuario = new usuarioModel({
+            email: req.body.email,
+            senha: bcrypt.hashSync(req.body.senha, 8),
+            tipo: req.body.tipo
+        })
+
+        usuarioModel.create(usuario, (err, data) => {
+            if (err) {
                 res.status(500).send({
-                    message: err.message || "Ocorreu ao inserir os dados"
-                });
-            }else {
+                    message: err.message || "Ocorreu um erro."
+                })
+            } else {
                 res.send(data);
             }
         })
     }
 }
+
+exports.signIn = (req, res) => {
+    usuarioModel.findByEmail(req.body.email, (err, data) => {
+        if (err) {
+            if (err == "not_found"){
+                res.status(404).send({
+                    message: "Não foi encontrado usuario com o email digitado."
+                })
+            } else {
+                res.status(500).send({
+                    message: "Ocorreu um erro ao buscar email do usuário no sistema."
+                })
+            }
+        } else {
+            let validPassword = bcrypt.compareSync(req.body.senha, data.senha);
+            if (!validPassword){
+                res.status(401).send({
+                    accessToken: null,
+                    message: "Senha inválida!"
+                })
+            } else {
+                let token = jwt.sign({id: data.idusuarios}, config.secret, {expiresIn: 86400}); //24h
+                res.status(200).send({
+                    accessToken: token,
+                    id: data.idusuarios,
+                    email: data.email,
+                    tipo: data.tipo
+                })
+            }
+        }
+
+    })
+};
+
 exports.findAll = (req, res) => {
-    ProdutoModel.getAll((err, data) =>{
-        if(err){
+    usuarioModel.getAll((err, data) => {
+        if (err){
             res.status(500).send({
                 message: err.message || "Ocorreu erro desconhecido!"
             });
-        } else{
+        } else {
             res.send(data);
-        }
-    })
-}
-
-exports.findById = (req, res) => {
-    ProdutoModel.findById(req.params.produtoId, (err, data)=> {
-        if(err){
-            if(err.type == "not_found"){
-                res.status(404).send({
-                    message: "Produto não encrontrado com ID: "+req.params.produtoId
-                });
-            }else{
-                res.status (500).send({
-                    message: "Erro ao retornar o produto com ID"+req.params.produtoId
-                });
-            }
-        }else {
-            res.send(data);
-        }
-    })
-}
-exports.update = (req, res) => {
-    if(!req.body.nome || !req.body.valor){
-        res.status(400).send({
-            message: "Conteúdo do corpo da requisição vazia."
-        });
-    }else { 
-        const produto = new ProdutoModel({
-            nome: req.body.nome,
-            valor: req.body.valor
-        });
-    ProdutoModel.updateById(req.params.produtoId, produto, (err, data)=>{
-        if(err){
-            if (err.type == "not_found"){
-                res.status(404).send({
-                    message: "Produto não encontrado."
-                })
-            }else {
-                res.status(500).send({
-                    message: "Erro ao atualizar produto."
-                })
-            }
-        }else{
-            res.send(data)
         }
     });
 }
+
+exports.update = (req, res) => {
+    if (!req.body.email || !req.body.senha || !req.body.tipo){
+        res.status(400).send({
+            message: "E-mail, senha ou tipo não enviados."
+        })
+    } else {
+        const usuario = new usuarioModel({
+            email: req.body.email,
+            senha: bcrypt.hashSync(req.body.senha, 8),
+            tipo: req.body.tipo
+        });
+        usuarioModel.updateById(req.params.idUsuario, usuario, (err, data) => {
+            if (err) {
+                if (err.type == "not_found") {
+                    res.status(404).send({
+                        message: "Usuário não encontrado."
+                    })
+                } else {
+                    res.status(500).send({
+                        message: "Erro ao atualizar usuário."
+                    })
+                } 
+            } else {
+                res.send(data);
+            }
+        });
+    }    
 }
 
 exports.delete = (req, res) => {
-        ProdutoModel.remove(req.params.produtoId, (err, data)=>{
-            if(err){
-                if (err.type == "not_found"){
-                    res.status(404).send({message: "Produto não encontrado."})
-                }else{
-                    res.status(500).send({message: "Erro ao deletar produto."})
-                }
-            }else {
-                res.send({message: "Produto deletado com sucesso"});
+    usuarioModel.remove(req.params.idUsuario, (err, data) => {
+        if (err) {
+            if (err.type == "not_found"){
+                res.status(404).send({message:"Usuário não encontrado."})
+            } else {
+                res.status(500).send({message: "Erro ao deletar usuário."})
             }
-        })
-}
-exports.deleteAll = (req, res) => {
-    ProdutoModel.removeAll((err, data) =>{
-        if(err){
-            res.status(500).send({message: "Erro ao deletar produto."})
-        }else{
-            res.send({message: "TODOS os produtos deletado com sucesso."});
+        } else {
+            res.send({message: "Usuário deletado com sucesso"});
         }
     })
 }
