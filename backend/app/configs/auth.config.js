@@ -1,4 +1,4 @@
 //Fica o segredo
-module.exports ={
+module.exports = {
     secret: "senac-chave-secreta"
 }

@@ -4,13 +4,13 @@ const usuarioModel = require("../models/usuario.model.js");
 
 verifyToken = (req, res, next) => {
     let token = req.headers["x-access-token"];
-    if (!token) {
+    if (!token){
         return res.status(403).send({
             message: "Não possui token para autenticação."
-        })
+        });
     } else {
         jwt.verify(token, config.secret, (err, decoded) => {
-            if (err) {
+            if (err){
                 res.status(401).send({
                     message: "Acesso não autorizado. Credenciais inválidas."
                 });
@@ -22,38 +22,37 @@ verifyToken = (req, res, next) => {
     }
 }
 
-
-isAdmin = (req, res, next)=>{
-    usuarioModel.findById(req.usuarioId, (err, data) =>{
-        if(data.tipo == 1){
+isAdmin = (req, res, next) => {
+    usuarioModel.findById(req.usuarioId, (err, data) => {
+        if (data.tipo == 1){
             next();
-        }else{
+        } else {
             res.status(403).send({
-                message:"Você precisa ser administrador para executar a ação!"
+                message: "Você precisa ser administrador para executar a ação!"
             })
         }
     });
 }
 
-isBalcao = (req, res, next)=>{
-    usuarioModel.findById(req.usuarioId, (err, data) =>{
-        if(data.tipo == 1 || data.tipo == 2){
+isBalcao = (req, res, next) => {
+    usuarioModel.findById(req.usuarioId, (err, data) => {
+        if (data.tipo == 1 || data.tipo == 2){
             next();
-        }else{
+        } else {
             res.status(403).send({
-                message:"Você precisa ser do balcao de atendimento para executar a ação!"
+                message: "Você precisa ser do balcao de atendimento para executar a ação!"
             })
         }
     });
 }
 
-isCozinha = (req, res, next)=>{
-    usuarioModel.findById(req.usuarioId, (err, data) =>{
-        if(data.tipo == 1 || data.tipo == 3){
+isCozinha = (req, res, next) => {
+    usuarioModel.findById(req.usuarioId, (err, data) => {
+        if (data.tipo == 1 || data.tipo == 3){
             next();
-        }else{
+        } else {
             res.status(403).send({
-                message:"Você precisa ser da cozinha para executar a ação!"
+                message: "Você precisa ser da cozinha para executar a ação!"
             })
         }
     });
