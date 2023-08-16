@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate }
                                                        from 'react-router-dom';
 import { isAuthenticated } from "./services/auth";
 import SignUp from './pages/SignUp';
+import Login from './pages/Login';
 
-const LoginPage = () => <h1>Login</h1>;
+const LoginPage = () =><Login />;
 const SignUpPage = () => <SignUp />;
 const NotFoundPage = () => <h1>Page not found.</h1>
 const AppPage = () => {

@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import api from '../../services/api';
+import { Form, Container } from "./style";
+import Logo from "../../assets/senac.png";
 
 const SignIn = () =>{
     const [email, setEmail] = useState('');
@@ -23,11 +25,11 @@ const SignIn = () =>{
             setError("Houve um problema com o login, verifique suas credenciais!!");
         }
     }
+
     return(
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSignIn}>
-                {error && <p>{error}</p>}
+        <Container>
+            <Form onSubmit={handleSignIn}>
+               <img src={Logo} alt="logo_senac"/>
                 <input
                 type="email"
                 placeholder='Endereço de email'
@@ -39,8 +41,9 @@ const SignIn = () =>{
                 onChange={e=>setSenha(e.target.value)}
                 />
                 <button type="submit">Entrar</button>
-            </form>
-        </div>
-    )
+                {error && <p>{error}</p>}
+            </Form>
+            </Container>
+    );
 }
 export default SignIn;
