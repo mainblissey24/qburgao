@@ -10,7 +10,6 @@ const SignUp = () => {
     const [tipo, setTipo] = useState("");
     const [error, setError] = useState("");
 
-
     const navigate = useNavigate();
 
     const handleSignUp = async e => {
@@ -33,6 +32,7 @@ const SignUp = () => {
 return (
     <Container>
         <Form onSubmit={handleSignUp}>
+            {error && <p>{error}</p>}
             <img src={Logo} alt="logo_senac"/>
             <input
                 type="email"

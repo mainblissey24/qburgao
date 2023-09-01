@@ -3,16 +3,16 @@ module.exports = app => {
     const authJwt = require("../middlewares/auth_jwt_middleware.js");
 
     //Rota para criar um novo registro Produto
-    app.post("/produtos", [authJwt.verifyToken, authJwt.isBalcao], produtoController.create);
+    app.post("/produtos", [authJwt.verifyToken, authJwt.isAdmin], produtoController.create);
     //Buscar todos os registros de Produtos
-    app.get("/produtos", [authJwt.verifyToken], produtoController.findAll);
+    app.get("/produtos", [authJwt.verifyToken, authJwt.isBalcao], produtoController.findAll);
     //Buscar apenas um registro de Produto
-    app.get("/produtos/:produtoId", [authJwt.verifyToken], produtoController.findById);
+    app.get("/produtos/:produtoId", [authJwt.verifyToken, authJwt.isBalcao], produtoController.findById);
     //Alterar um registro de Produto
-    app.put("/produtos/:produtoId", [authJwt.verifyToken], produtoController.update);
+    app.put("/produtos/:produtoId", [authJwt.verifyToken, authJwt.isAdmin], produtoController.update);
     //Excluir um regstro de Produto
-    app.delete("/produtos/:produtoId", [authJwt.verifyToken], produtoController.delete);
+    app.delete("/produtos/:produtoId", [authJwt.verifyToken, authJwt.isAdmin], produtoController.delete);
     //Excluir todos os registros de Produto
-    app.delete("/produtos/", [authJwt.verifyToken], produtoController.deleteAll);
+    app.delete("/produtos/", [authJwt.verifyToken, authJwt.isAdmin], produtoController.deleteAll);
 }
 

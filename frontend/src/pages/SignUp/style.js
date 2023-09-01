@@ -32,7 +32,7 @@ export const Form = styled.form`
         margin-bottom: 15px;
         padding: 0 20px;
         color: #777;
-
+        font-size: 15px;
         width: 100%;
         border: 1px solid #ddd;
         &::placeholder {
