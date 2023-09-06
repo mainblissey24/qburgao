@@ -7,12 +7,16 @@ import Login from './pages/Login';
 import Usuarios from './pages/Usuarios';
 import Produto from './pages/Produto';
 import Produtos from './pages/Produtos';
+import Pedidos from "./pages/Pedidos";
+import Pedido from "./pages/Pedido";
 
 const LoginPage = () => <Login />;
 const SignUpPage = () => <SignUp />;
 const UsuariosPage = () => <Usuarios />
 const ProdutoPage = () => <Produto />
 const ProdutosPage = () => <Produtos />
+const PedidosPage = () => <Pedidos />
+const PedidoPage = () => <Pedido />
 const NotFoundPage = () => <h1>Page not found.</h1>
 const AppPage = () => {
     if (!isAuthenticated()){
@@ -30,6 +34,8 @@ const Rotas = () => (
             <Route path='/usuarios' element={<UsuariosPage />} />
             <Route path='/produtos' element={<ProdutosPage />} />
             <Route path='/produto' element={<ProdutoPage />} />
+            <Route path='/pedidos' element={<PedidosPage />}/>
+            <Route path='/pedido' element={<PedidoPage />}/>
             <Route path='*' element={<NotFoundPage />} />
         </Routes>
     </Router>    

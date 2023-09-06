@@ -3,26 +3,26 @@ import { useNavigate } from "react-router-dom";
 import { Form, Container } from "./style";
 import api from "../../services/api";
 import Logo from "../../assets/senac.png";
-import Produtos from "../Produtos";
+import Pedidos from "../Pedidos";
 
-const Produto = () => {
-    const [nome, setNome] = useState("");
-    const [valor, setValor] = useState("");
+const Pedido = () => {
+    const [hora, setHora] = useState("");
+    const [status, setStatus] = useState("");
     const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
     const handleSignUp = async e => {
         e.preventDefault();
-        if (!nome || !valor){
+        if (!hora || !status){
             setError("Preencha todos os dados para cadastrar");
         } else {
             try {
-                await api.post("/produtos", {nome, valor});
-                navigate("/produtos");
+                await api.post("/pedidos", {hora, status});
+                navigate("/pedidos");
             } catch (err){
                 console.log(err);
-                setError("Ocorreu um erro ao cadastrar produto.")
+                setError("Ocorreu um erro ao cadastrar pedido.")
             }
         }
 
@@ -36,18 +36,18 @@ return (
             <img src={Logo} alt="logo_senac"/>
             <input
                 type="text"
-                placeholder="Nome"
-                onChange={e => setNome(e.target.value)}
+                placeholder="hora"
+                onChange={e => setHora(e.target.value)}
             />    
             <input 
                 type="text"
-                placeholder="Valor"
-                onChange={e => setValor(e.target.value)}
+                placeholder="status"
+                onChange={e => setStatus(e.target.value)}
             />
-            <button type="submit">Cadastro de Produtos</button>
+            <button type="submit">Cadastro de Pedidos</button>
         </Form>
     </Container>
 )
 }
 
-export default Produto;
+export default Pedido;
