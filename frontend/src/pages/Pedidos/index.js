@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaWindowClose, FaExclamation } from 'react-icons/fa';
 import api from '../../services/api';
 import { Container } from './style';
+import Navbar from "../../components/Navbar";
 
 const Pedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -38,6 +39,7 @@ const Pedidos = () => {
 
     return (
         <div>
+              <Navbar/>
             <h1>Listagem de Pedidos</h1>
             {error && <p>{error}</p>}
             <Container>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaWindowClose, FaExclamation } from 'react-icons/fa';
 import api from '../../services/api';
 import { UsuarioContainer } from './style';
+import Navbar from "../../components/Navbar";
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -38,6 +39,7 @@ const Usuarios = () => {
 
     return (
         <div>
+              <Navbar/>
             <h1>Listagem de Usuários</h1>
             {error && <p>{error}</p>}
             <UsuarioContainer>

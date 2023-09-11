@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Container } from "./style";
 import api from "../../services/api";
 import Logo from "../../assets/senac.png";
+import Navbar from "../../components/Navbar";
 
 const SignUp = () => {
     const [email, setEmail] = useState("");

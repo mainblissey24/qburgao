@@ -4,6 +4,7 @@ import { Form, Container } from "./style";
 import api from "../../services/api";
 import Logo from "../../assets/senac.png";
 import Produtos from "../Produtos";
+import Navbar from "../../components/Navbar";
 
 const Produto = () => {
     const [nome, setNome] = useState("");
@@ -30,6 +31,8 @@ const Produto = () => {
 
 
 return (
+    <div>
+         <Navbar/>
     <Container>
         <Form onSubmit={handleSignUp}>
             {error && <p>{error}</p>}
@@ -47,6 +50,7 @@ return (
             <button type="submit">Cadastro de Produtos</button>
         </Form>
     </Container>
+    </div>
 )
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { FaEdit, FaWindowClose, FaExclamation } from 'react-icons/fa';
 import api from '../../services/api';
+import Navbar from "../../components/Navbar";
 import { Container } from './style';
 
 const Produtos = () => {
@@ -38,6 +39,7 @@ const Produtos = () => {
 
     return (
         <div>
+            <Navbar/>
             <h1>Listagem de Produtos</h1>
             {error && <p>{error}</p>}
             <Container>

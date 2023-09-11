@@ -4,6 +4,7 @@ import { Form, Container } from "./style";
 import api from "../../services/api";
 import Logo from "../../assets/senac.png";
 import Pedidos from "../Pedidos";
+import Navbar from "../../components/Navbar";
 
 const Pedido = () => {
     const [hora, setHora] = useState("");
@@ -30,6 +31,9 @@ const Pedido = () => {
 
 
 return (
+    <div>
+         <Navbar/>
+    
     <Container>
         <Form onSubmit={handleSignUp}>
             {error && <p>{error}</p>}
@@ -47,6 +51,7 @@ return (
             <button type="submit">Cadastro de Pedidos</button>
         </Form>
     </Container>
+    </div>
 )
 }
 
