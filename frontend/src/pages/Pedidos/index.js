@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { FaEdit, FaWindowClose, FaExclamation } from 'react-icons/fa';
 import api from '../../services/api';
-import { Container } from './style';
 import Navbar from "../../components/Navbar";
+import { Container } from './style';
 
 const Pedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -39,7 +39,7 @@ const Pedidos = () => {
 
     return (
         <div>
-              <Navbar/>
+            <Navbar />
             <h1>Listagem de Pedidos</h1>
             {error && <p>{error}</p>}
             <Container>
@@ -55,7 +55,7 @@ const Pedidos = () => {
                         <span>{pedido.idpedidos}</span>
                         <span>{pedido.hora}</span>
                         <span>{pedido.status}</span>
-                        <Link to={`/pedidos/${pedido.idpedidos}`}>
+                        <Link to={`/produtos/${pedido.idpedidos}`}>
                             <FaEdit size={16} />
                         </Link>
                         <Link onClick={handleDeleteAsk} to={`/pedidos/${pedido.idpedidos}`}>

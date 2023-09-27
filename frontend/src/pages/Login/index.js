@@ -1,16 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import { Container, Form } from './style';
 import Logo from "../../assets/senac.png";
-import Navbar from "../../components/Navbar";
 
 const SignIn = () => {
+
+
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
+
+   
 
     const handleSignIn = async e => {
         e.preventDefault();
@@ -32,11 +35,13 @@ const SignIn = () => {
             <Form onSubmit={handleSignIn}>
                 <img src={Logo} alt="logo_senac"/>
                 <input
+                
                     type="email"
                     placeholder='Endereço de Email'
                     onChange={e=>setEmail(e.target.value)}
                 />
                 <input
+                 
                     type="password"
                     placeholder='Senha'
                     onChange={e=>setSenha(e.target.value)}

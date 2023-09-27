@@ -39,7 +39,7 @@ const Produtos = () => {
 
     return (
         <div>
-            <Navbar/>
+            <Navbar />
             <h1>Listagem de Produtos</h1>
             {error && <p>{error}</p>}
             <Container>

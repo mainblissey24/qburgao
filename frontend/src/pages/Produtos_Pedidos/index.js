@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { FaEdit, FaWindowClose, FaExclamation } from 'react-icons/fa';
 import api from '../../services/api';
-import { Container } from './style';
 import Navbar from "../../components/Navbar";
+import { Container } from './style';
 
-const Pedidos = () => {
-    const [pedidos, setPedidos] = useState([]);
+const Produtos_Pedidos = () => {
+    const [produtos_pedidos, setProdutos_Pedidos] = useState([]);
     const [error, setError] = useState('');
 
     useEffect(() => {
         async function getData(){
-            const response = await api.get('/pedidos');
-            setPedidos(response.data);
+            const response = await api.get('/produtos_pedidos');
+            setProdutos_Pedidos(response.data);
         }
         getData();
     }, []);
@@ -28,10 +28,10 @@ const Pedidos = () => {
         e.persist();
         let response = '';
         try{
-            response = await api.delete(`/pedidos/${id}`);
-            const novosPedidos = [...pedidos];
-            novosPedidos.splice(index, 1);
-            setPedidos(novosPedidos);
+            response = await api.delete(`/produtos_pedidos/${id}`);
+            const novosProdutos_Pedidos = [...produtos_pedidos];
+            novosProdutos_Pedidos.splice(index, 1);
+            setProdutos_Pedidos(novosProdutos_Pedidos);
         }catch(err){
             setError('Houve um problema ao excluir os dados: '+response);
         }
@@ -39,33 +39,34 @@ const Pedidos = () => {
 
     return (
         <div>
-              <Navbar/>
-            <h1>Listagem de Pedidos</h1>
+            <Navbar />
+            <h1>Listagem de Produtos_Pedidos (Status)</h1>
             {error && <p>{error}</p>}
             <Container>
                 <div>
                     <span>ID</span>
-                    <span>Hora</span>
-                    <span>Status</span>
+                    <span>ID Produtos</span>
+                    <span>ID Pedidos</span>
+                    <span>Observação</span>
                     <span>Editar</span>
                     <span>Excluir</span>
                 </div>
-                {pedidos.map((pedido, index) => (
-                    <div key={String(pedido.idpedidos)}>
-                        <span>{pedido.idpedidos}</span>
-                        <span>{pedido.hora}</span>
-                        <span>{pedido.status}</span>
-                        <Link to={`/pedidos/${pedido.idpedidos}`}>
+                {produtos_pedidos.map((produto_pedido, index) => (
+                    <div key={String(produto_pedido.idprodutos_pedidos)}>
+                        <span>{produto_pedido.produtos_idprodutos}</span>
+                        <span>{produto_pedido.pedidos_idpedidos}</span>
+                        <span>{produto_pedido.observacao}</span>
+                        <Link to={`/produtos_pedidos/${produto_pedido.idprodutos_pedidos}`}>
                             <FaEdit size={16} />
                         </Link>
-                        <Link onClick={handleDeleteAsk} to={`/pedidos/${pedido.idpedidos}`}>
+                        <Link onClick={handleDeleteAsk} to={`/produtos_pedidos/${produto_pedido.idprodutos_pedidos}`}>
                             <FaWindowClose size={16} />
                         </Link>
                         <FaExclamation
                             size={16}
                             display="none"
                             cursor="pointer"
-                            onClick={(e) => handleDelete(e, pedido.idpedidos, index)}
+                            onClick={(e) => handleDelete(e, produto_pedido.idprodutos_pedidos, index)}
                         />    
                     </div>
                 ))}
@@ -74,4 +75,4 @@ const Pedidos = () => {
     );
 };
 
-export default Pedidos;
+export default Produtos_Pedidos;

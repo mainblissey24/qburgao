@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { FaEdit, FaWindowClose, FaExclamation } from 'react-icons/fa';
 import api from '../../services/api';
-import { UsuarioContainer } from './style';
 import Navbar from "../../components/Navbar";
+import { UsuarioContainer } from './style';
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -39,7 +39,7 @@ const Usuarios = () => {
 
     return (
         <div>
-              <Navbar/>
+            <Navbar />
             <h1>Listagem de Usuários</h1>
             {error && <p>{error}</p>}
             <UsuarioContainer>
@@ -55,7 +55,7 @@ const Usuarios = () => {
                         <span>{usuario.idusuarios}</span>
                         <span>{usuario.email}</span>
                         <span>{usuario.tipo}</span>
-                        <Link to={`/usuarios/${usuario.idusuarios}`}>
+                        <Link to={`/signup/${usuario.idusuarios}`}>
                             <FaEdit size={16} />
                         </Link>
                         <Link onClick={handleDeleteAsk} to={`/usuarios/${usuario.idusuarios}`}>
